@@ -58,7 +58,7 @@
 		<h6 id="NotFound"> </h6>
 
 	</section>
-	<section class="image-results-section bg-primary">
+	<section class="image-results-section">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12" id="my-galary">
@@ -343,7 +343,7 @@ var searchImage = function() {
       }
       removeElementsByClass('dynamicElement');
       // console.log(data);  
-      for (var i = 0; i <= data.photos.length; i++) {
+      for (var i = 0; i < data.photos.length ; i++) {
         var img = data.photos[i];
         console.log(img);
         var node = document.getElementById('mycontent').cloneNode(true);
@@ -382,7 +382,7 @@ addTextbox = function () {
     top: getRandomInt(350, 400),
     fontFamily: 'helvetica',
     angle: 0, // getRandomInt(-10, 10),
-    fill: '#' + getRandomColor(),
+    fill: 'white' + getRandomColor(),
     fontWeight: '',
     originX: 'left',
     width: 300,
@@ -397,6 +397,24 @@ function AddLayer(layer) {
   layers.push(layer);
   console.log(layers);
 }
+
+
+
+
+
+
+
+
+
+
+debugger
+function download() {
+    var download = document.getElementById("download");
+    var image = document.getElementById("c").toDataURL("image/png")
+        .replace("image/png", "image/octet-stream");
+    download.setAttribute("href", image);
+    //download.setAttribute("download","archive.png");
+    }
 	</script>
 </body>
 
