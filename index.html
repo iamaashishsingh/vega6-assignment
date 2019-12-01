@@ -349,8 +349,8 @@ var searchImage = function() {
         var node = document.getElementById('mycontent').cloneNode(true);
         node.id = "mycontent" + i;
         if (img) {
-          node.childNodes[1].childNodes[3].childNodes[1].target = '_blank';
-          node.childNodes[1].childNodes[1].target = '_blank';
+          // node.childNodes[1].childNodes[3].childNodes[1].target = '_blank';
+          // node.childNodes[1].childNodes[1].target = '_blank';
           node.childNodes[1].childNodes[3].childNodes[1].href = 'https://js-x68hr4.stackblitz.io/?url=' + img.src.large;
           node.childNodes[1].childNodes[1].href = 'https://js-x68hr4.stackblitz.io/?url=' + img.src.large;
           if (node.childNodes[1].childNodes[1].childNodes[1]) {
