@@ -123,12 +123,12 @@ body {
   .add-caption-btn{
     width: 100%;
   }
-  .image-editor-controls{
+  /* .image-editor-controls{
     position: absolute;
     top:70%;
     left:50%;
     transform: translate(-50%,-50%);
-  }
+  } */
   .home-link{
     display: flex;
     justify-content: center;
@@ -140,4 +140,12 @@ body {
      top:65vh;
      margin-left: 40%;
      background-color: blanchedalmond;
+  }
+  .cvs-container{
+    position: absolute;
+    top:0;
+  }
+  .btn-cntrl{
+    position: absolute;
+    top:80%;
   }
