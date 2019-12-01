@@ -126,8 +126,8 @@ body {
     position: absolute;
     top:80%;
   }
-    .cvs-container{
-    position: relative;
+  .cvs-container{
+    position: fixed;
     top:0;
   }
     .home-link{
@@ -148,9 +148,5 @@ body {
     left:50%;
     transform: translate(-50%,-50%);
   } 
-  .canvas{
-   position: absolute;
-   top:0;
-   background-color: red;
-  }
+
 
