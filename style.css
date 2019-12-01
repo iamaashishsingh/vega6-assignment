@@ -1,14 +1,10 @@
 body {
     color: #282828;
-    background-color: #006ff9;
-    
-}
+    background-color: blueviolet;
+  }
 * {
   box-sizing: border-box;
-}
-
-
-
+ }
 .search {
     width: 100%;
     position: relative;
@@ -123,13 +119,18 @@ body {
   .add-caption-btn{
     width: 100%;
   }
-  /* .image-editor-controls{
+
+ 
+/* details page css */
+ .btn-cntrl{
     position: absolute;
-    top:70%;
-    left:50%;
-    transform: translate(-50%,-50%);
-  } */
-  .home-link{
+    top:80%;
+  }
+    .cvs-container{
+    position: relative;
+    top:0;
+  }
+    .home-link{
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -141,11 +142,10 @@ body {
      margin-left: 40%;
      background-color: blanchedalmond;
   }
-  .cvs-container{
+    /* .image-editor-controls{
     position: absolute;
-    top:0;
-  }
-  .btn-cntrl{
-    position: absolute;
-    top:80%;
-  }
+    top:70%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  } */
+
