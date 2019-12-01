@@ -267,9 +267,13 @@ function searchImage() {
         console.log(img);
         var node = document.getElementById('mycontent').cloneNode(true);
         node.id = "mycontent" + i;
+        if(img) {
         node.childNodes[1].childNodes[3].childNodes[1].href = '/details.html/?url=' + img.src.large;
         node.childNodes[1].childNodes[1].href = '/details.html/?url=' + img.src.large;
+        if (node.childNodes[1].childNodes[1].childNodes[1]) {
         node.childNodes[1].childNodes[1].childNodes[1].src = img.src.tiny;
+        }
+        }
         node.classList.add('dynamicElement');
         document.getElementById('my-galary').appendChild(node);
       }
