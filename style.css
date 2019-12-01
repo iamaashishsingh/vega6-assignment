@@ -142,10 +142,15 @@ body {
      margin-left: 40%;
      background-color: blanchedalmond;
   }
-    /* .image-editor-controls{
+  .image-editor-controls{
     position: absolute;
     top:70%;
     left:50%;
     transform: translate(-50%,-50%);
-  } */
+  } 
+  .canvas{
+   position: absolute;
+   top:0;
+   background-color: red;
+  }
 
