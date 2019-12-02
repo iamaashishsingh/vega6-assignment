@@ -1,66 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="icon" type="image/gif" sizes="32x32" href="/load.gif">
-  <title>Image Editor</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
-  <link rel="stylesheet" href="/style.css">
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="icon" type="image/gif" sizes="32x32" href="/load.gif">
+	<title>Image Editor</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.4.0/fabric.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
 </head>
 <body>
-  <section class="canvas">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xs-12 col-md-6" class="cvs-container">
-          <canvas id="myCanvas" width="100%" height="auto"></canvas>
-        </div>
-        <div class="col-xs-12 col-md-6">
-          <div class="image-editor-controls">
-            <p class="btn-cntrl">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <label class="btn btn-primary " type="button" for="inputGroupSelect01" onclick="addTextbox()">Add Caption</label>
-                </div>
-                <select class="custom-select" id="option-shape" onchange="schedule(this.value)">
-                  <option selected>Add Shape</option>
+	<section class="canvas">
+		<div class="container-fluid">
+			<div class="row" >
+      <div class="canvas-wrapper">
+	      <div class="col-sm-12 col-md-6 col-lg-6 " id="mydivcanvas" > 
+				 <canvas id="c" width="500" height="500"></canvas>
+            <canvas id="cimg" width="500" height="500" ></canvas>
+				</div>
+      </div>
+			
+				<div class="col-sm-12 col-md-6 col-lg-6">
+					<div class="image-editor-controls">
+				
+							<!-- <button class="btn btn-primary" onclick="addTextbox()">Add textbox</button> -->
+							<div class="input-group mb-1">
+							
+                <span class="css-btn add-shape-btn">
+	              <span class="input-group-prepend">
+									<label class="btn btn-primary caption-btn  css-btn" type="button" for="inputGroupSelect01" onclick="addTextbox()">Add Caption</label>
+								</span>
+              	<select class="custom-select css-btn" id="option-shape" onchange="schedule(this.value)">
+                  <option selected style:"width:20px"> Add Shape</option>
                   <option value="1" onclick="addRect()">Rectangle</option>
                   <option value="2" onclick="addCircle()">Circle</option>
                   <option value="3" onclick="addTriangle()">Triangle</option>
                   <option value="3" onclick="addPolygon()">Polygon</option>
                 </select>
-              </div>
-            </p>
-            <a id="download" class="btn btn-primary btn-md btn-block" download="myImage.jpg" href=""
-              onclick="download()">Download Image</a>
-              <a href="/" class="home-link" style="color:white">back to home</a>
+                </div>
+							
+							</span>
+						
+						<a class="btn btn-primary css-btn" 
+							onclick="PrintDiv()">Download Image</a>
+						<a href="https://js-ksdxz2.stackblitz.io/" class="home-link" style="color:white">back to
+							home</a>
+     		</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script>
+		var canvas = new fabric.Canvas('c');
+    var cimg = new fabric.Canvas('cimg');
+    var addBGImg = function () {
+      var imgUrl = location.search.replace('?url=', '');
+      var ctx = cimg.getContext("2d");
+      var background = new Image();
+      background.crossOrigin = "Anonymous";
+      background.src = imgUrl;
+      background.onload = function () {
+      ctx.drawImage(background, 0, 0);
+      }
+    }
+      var PrintDiv = function () {
+      var div = document.getElementById('mydivcanvas');
+      html2canvas((div), {
+      allowTaint: true,
+      // taintTest: false,
+      onrendered: function (canvas) {
+      var myImage = canvas.toDataURL();
+      downloadURI(myImage, "canvas_img.png");
+    }
+  });
+}
 
-    <a id="download" download="triangle.png">
-            <button type="button" class="btn btn-primary btn-md btn-block"  onClick="download()">imsge oh ho</button>
-            </a>
-                
-
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 
+var downloadURI =    function (uri, name) {
+      var link = document.createElement("a");
 
-
-
+      link.download = name;
+      link.href = uri;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      //after creating link you should delete dynamic link
+      //clearDynamicLink(link); 
+    }
 
 
 
-
+var addText = function () {
+  text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
+    'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
+  textSample = new fabric.Text(text.slice(0, getRandomInt(0, text.length)), {
+    left: getRandomInt(350, 400),
+    top: getRandomInt(350, 400),
+    fontFamily: 'helvetica',
+    angle: getRandomInt(-10, 10),
+    fill: '#' + getRandomColor(),
+    scaleX: 0.5,
+    scaleY: 0.5,
+    fontWeight: '',
+    originX: 'left',
+    hasRotatingPoint: true,
+    centerTransform: true
+  });
+  canvas.add(textSample);
+};
+var getRandomInt = function () {
+  return 100;
+}
+var addTextbox = function () {
+  text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
+    'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
+  textSample = new fabric.Textbox(text.slice(0, getRandomInt(0, text.length)), {
+    fontSize: 20,
+    left: getRandomInt(350, 400),
+    top: getRandomInt(350, 400),
+    fontFamily: 'helvetica',
+    angle: 0, // getRandomInt(-10, 10),
+    fill: '#' + getRandomColor(),
+    fontWeight: '',
+    originX: 'left',
+    width: 300,
+    hasRotatingPoint: true,
+    centerTransform: true
+  });
+  canvas.add(textSample);
+};
+var addIText = function () {
+  text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
+    'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo consequat.';
+  textSample = new fabric.IText(text.slice(0, getRandomInt(0, text.length)), {
+    left: getRandomInt(350, 400),
+    top: getRandomInt(350, 400),
+    fontFamily: 'helvetica',
+    angle: getRandomInt(-10, 10),
+    fill: '#' + getRandomColor(),
+    scaleX: 0.5,
+    scaleY: 0.5,
+    fontWeight: '',
+    originX: 'left',
+    hasRotatingPoint: true,
+    centerTransform: true
+  });
+  canvas.add(textSample);
+};
+var getRandomColor = function () {
+  return 'Red';
+}
+function addSelectedShapes() {
+  var selectedIndexValue = document.getElementById('option-shape').selectedIndex;
+  console.log(selectedIndexValue);
+  // document.write(selectedIndexValue);
+  if (selectedIndexValue == 0) {
+    alert("please select an option");
+  }
+  else if (selectedIndexValue == 1) {
+    addRect();
+    resetSelectedIndex();
+    AddLayer("Reactangle");
+  }
+  else if (selectedIndexValue == 2) {
+    addCircle();
+    resetSelectedIndex();
+    AddLayer("Circle");
+  }
+  else if (selectedIndexValue == 3) {
+    addTriangle();
+    resetSelectedIndex();
+    AddLayer("Triangle");
+  }
+  else if (selectedIndexValue == 4) {
+    addPolygon();
+    resetSelectedIndex();
+    AddLayer("Polygon");
+  }
+}
+var resetSelectedIndex = function () {
+  document.getElementById('option-shape').selectedIndex = 0;
+}
+// dowload canvas image
+function schedule(selectedValue) {
+  addSelectedShapes();
+}
+addBGImg();
+var addShape = function (shapeName) {
+  console.log('adding shape', shapeName);
+  coord = getRandomLeftTop();
+  fabric.loadSVGFromURL('.../../' + shapeName + '.svg', function (objects, options) {
+    loadedObject = fabric.util.groupSVGElements(objects, options);
+    loadedObject.set({
+      left: coord.left,
+      top: coord.top,
+      angle: getRandomInt(-10, 10)
+    })
+      .setCoords();
+    canvas.add(loadedObject);
+  });
+};
+var addPatternRect = function () {
+  coord = getRandomLeftTop();
+  rect = new fabric.Rect({
+    width: 300,
+    height: 300,
+    left: coord.left,
+    top: coord.top,
+    angle: getRandomInt(-10, 10),
+    fill: pattern,
+  });
+  canvas.add(rect);
+};
+var addRect = function () {
+  coord = getRandomLeftTop();
+  canvas.add(new fabric.Rect({
+    left: coord.left,
+    top: coord.top,
+    fill: '#' + getRandomColor(),
+    width: 50,
+    height: 50,
+    opacity: 0.8
+  }));
+};
+var addCircle = function () {
+  coord = getRandomLeftTop();
+  canvas.add(new fabric.Circle({
+    left: coord.left,
+    top: coord.top,
+    fill: '#' + getRandomColor(),
+    radius: 50,
+    opacity: 0.8
+  }));
+};
+var getRandomLeftTop = function () {
+  return { left: Math.random() * 150, top: Math.random() * 180 }
+}
+var addTriangle = function () {
+  coord = getRandomLeftTop();
+  canvas.add(new fabric.Triangle({
+    left: coord.left,
+    top: coord.top,
+    fill: '#' + getRandomColor(),
+    width: 50,
+    height: 50,
+    opacity: 0.8
+  }));
+};
+var addPolygon = function () {
+  coord = getRandomLeftTop();
+  this.canvas.add(new fabric.Polygon([
+    { x: 185, y: 0 },
+    { x: 250, y: 100 },
+    { x: 385, y: 170 },
+    { x: 0, y: 245 }], {
+    left: coord.left,
+    top: coord.top,
+    fill: '#' + getRandomColor()
+  }));
+};
+function addImage(imageName, minScale, maxScale) {
+  coord = getRandomLeftTop();
+  fabric.Image.fromURL(imageName, function (image) {
+    image.set({
+      left: 0, //coord.left,
+      top: 0, // coord.top,
+      angle: 0 // getRandomInt(-10, 10)
+    })
+      .scale(0.5)// getRandomNum(minScale, maxScale))
+      .setCoords();
+    canvas.add(image);
+  });
+};
+var addResizeFilter = function () {
+  setActiveStyle('resizeFilter', new fabric.Image.filters.Resize());
+  canvas.requestRenderAll();
+}
+addTextbox = function () {
+text = 'Lorem ipsum dolor sit amet,\nconsectetur adipisicing elit,\nsed do eiusmod tempor incididunt\nut labore et dolore magna aliqua.\n' +
+'Ut enim ad minim veniam,\nquis nostrud exercitation ullamco\nlaboris nisi ut aliquip ex ea commodo         consequat.';
+textSample = new fabric.Textbox(text.slice(0, getRandomInt(0, text.length)), {
+fontSize: 20,
+left: getRandomInt(350, 400),
+top: getRandomInt(350, 400),
+fontFamily: 'helvetica',
+angle: 0, // getRandomInt(-10, 10),
+fill: '#' + getRandomColor(),
+fontWeight: '',
+originX: 'left',
+width: 300,
+hasRotatingPoint: true,
+centerTransform: true
+});
+canvas.add(textSample);
+AddLayer("Text");
+};
+var layers = ["image"];
+function AddLayer(layer) {
+layers.push(layer);
+console.log(layers);
+}
+</script>
 </body>
-
 </html>
-<script src="../../js/fabric.min.js"></script>
-<script src="../../js/details-script.js"></script>
